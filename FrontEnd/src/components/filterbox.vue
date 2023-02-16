@@ -29,7 +29,6 @@
           v-model="priceed"
         />
         <input type="number" placeholder="$" id="numberinputdollar" />
-        
       </div>
     </div>
 
@@ -55,19 +54,30 @@
       </div>
     </div>
     <div class="customspace"></div>
-    <div class="scrollbar" :style="{ height: pcertshowAll ? 'auto' : '50px', overflowY: pcertshowAll ? 'hidden' : 'scroll' }"> <div id="checkboxes" v-for="item in certData.pCertData">
-      <input
-        type="checkbox"
-        :value="item"
-        v-model="pcert"
-        class="labelselect"
-      />
-      <label class="labelselect">{{ item }}</label>
-    </div></div>
-    <P class="labelseeall" @click="pcertshowAll=true" v-if="!pcertshowAll">Show all</P>
-    <P class="labelseeall" @click="pcertshowAll=false" v-if="pcertshowAll">Show Less</P>
+    <div
+      class="scrollbar"
+      :style="{
+        height: pcertshowAll ? 'auto' : '50px',
+        overflowY: pcertshowAll ? 'hidden' : 'scroll',
+      }"
+    >
+      <div id="checkboxes" v-for="item in certData.pCertData">
+        <input
+          type="checkbox"
+          :value="item"
+          v-model="pcert"
+          class="labelselect"
+        />
+        <label class="labelselect">{{ item }}</label>
+      </div>
+    </div>
+    <P class="labelseeall" @click="pcertshowAll = true" v-if="!pcertshowAll"
+      >Show all</P
+    >
+    <P class="labelseeall" @click="pcertshowAll = false" v-if="pcertshowAll"
+      >Show Less</P
+    >
 
-    
     <h3 class="label">Supplier Certifications</h3>
     <div class="container">
       <div id="pcertouter">
@@ -80,19 +90,29 @@
       </div>
     </div>
     <div class="customspace"></div>
-    <div class="scrollbar" :style="{ height: scertshowAll ? 'auto' : '50px', overflowY: scertshowAll ? 'hidden' : 'scroll' }"> 
-
-    <div id="checkboxes" v-for="item in certData.sCertData">
-      <input
-        type="checkbox"
-        v-bind:value="item"
-        v-model="scert"
-        class="labelselect"
-      />
-      <label class="labelselect">{{ item }}</label>
-    </div></div>
-    <P class="labelseeall" @click="scertshowAll=true" v-if="!scertshowAll">Show all</P>
-    <P class="labelseeall" @click="scertshowAll=false" v-if="scertshowAll">Show Less</P>
+    <div
+      class="scrollbar"
+      :style="{
+        height: scertshowAll ? 'auto' : '50px',
+        overflowY: scertshowAll ? 'hidden' : 'scroll',
+      }"
+    >
+      <div id="checkboxes" v-for="item in certData.sCertData">
+        <input
+          type="checkbox"
+          v-bind:value="item"
+          v-model="scert"
+          class="labelselect"
+        />
+        <label class="labelselect">{{ item }}</label>
+      </div>
+    </div>
+    <P class="labelseeall" @click="scertshowAll = true" v-if="!scertshowAll"
+      >Show all</P
+    >
+    <P class="labelseeall" @click="scertshowAll = false" v-if="scertshowAll"
+      >Show Less</P
+    >
     <h3 class="label">Manufacturer Location</h3>
     <div class="container">
       <div id="pcertouter">
@@ -105,25 +125,39 @@
       </div>
     </div>
     <div class="customspace"></div>
-    <div class="scrollbar" :style="{ height: mlocationshowAll ? 'auto' : '50px', overflowY: mlocationshowAll ? 'hidden' : 'scroll' }"> 
-
-
-    <div id="checkboxes" v-for="item in certData.MlocationData">
-      <input
-        type="checkbox"
-        v-bind:value="item"
-        v-model="Mlocation"
-        class="labelselect"
-      />
-      <label class="labelselect">{{ item }}</label>
+    <div
+      class="scrollbar"
+      :style="{
+        height: mlocationshowAll ? 'auto' : '50px',
+        overflowY: mlocationshowAll ? 'hidden' : 'scroll',
+      }"
+    >
+      <div id="checkboxes" v-for="item in certData.MlocationData">
+        <input
+          type="checkbox"
+          v-bind:value="item"
+          v-model="Mlocation"
+          class="labelselect"
+        />
+        <label class="labelselect">{{ item }}</label>
+      </div>
     </div>
-  </div>
-  <P class="labelseeall" @click="mlocationshowAll=true" v-if="!mlocationshowAll">Show all</P>
-    <P class="labelseeall" @click="mlocationshowAll=false" v-if="mlocationshowAll">Show Less</P>
+    <P
+      class="labelseeall"
+      @click="mlocationshowAll = true"
+      v-if="!mlocationshowAll"
+      >Show all</P
+    >
+    <P
+      class="labelseeall"
+      @click="mlocationshowAll = false"
+      v-if="mlocationshowAll"
+      >Show Less</P
+    >
     <h3 class="label">Stock Availability</h3>
 
     <div id="checkboxes">
-      <input type="checkbox" v-model="isUsa" class="labelselect" value="true"/>
+      <input type="checkbox" v-model="isUsa" class="labelselect" value="true" />
       <label class="labelselect">USA</label>
     </div>
   </div>
@@ -154,9 +188,9 @@ export default {
       Mcat: [],
       Mcatbol: false,
       isUsa: false,
-      pcertshowAll:false,
-      scertshowAll:false,
-      mlocationshowAll:false,
+      pcertshowAll: false,
+      scertshowAll: false,
+      mlocationshowAll: false,
     };
   },
   watch: {
@@ -214,92 +248,76 @@ export default {
 
   methods: {
     updateProducts() {
-  let baseSlug = this.Uri;
-  if (baseSlug.indexOf("?") === -1) {
-    console.log("length?",baseSlug.length);
-    baseSlug += "?";
-    
-  }
-  else if(baseSlug.length !=30)
-  {
-    console.log("length&",baseSlug.length);
-    baseSlug += "&";
+      let baseSlug = this.Uri;
+      if (baseSlug.indexOf("?") === -1) {
+        console.log("length?", baseSlug.length);
+        baseSlug += "?";
+      } else if (baseSlug.length != 30) {
+        console.log("length&", baseSlug.length);
+        baseSlug += "&";
+      }
 
-  }
+      function createParamString(name, values) {
+        if (values.length > 0) {
+          return `${name}=${values.join(",")}`;
+        }
+        return "";
+      }
 
+      let pcertParams = createParamString("Pcert_name", this.pcert);
+      let scertParams = createParamString("Scert_name", this.scert);
+      let mlocationParams = createParamString("MLocation_name", this.Mlocation);
+      let priceStartParam = this.pricest ? `pricestart=${this.pricest}` : "";
+      let priceEndParam = this.priceed ? `pricefinal=${this.priceed}` : "";
+      let moqParam = this.MOQ ? `moqfilt=${this.MOQ}` : "";
 
-  function createParamString(name, values) {
-    if (values.length > 0) {
-      return `${name}=${values.join(",")}`;
-    }
-    return "";
-  }
+      let queryParams = [
+        pcertParams,
+        scertParams,
+        mlocationParams,
+        priceStartParam,
+        priceEndParam,
+        moqParam,
+      ]
+        .filter(Boolean)
+        .join("&");
 
-  let pcertParams = createParamString("Pcert_name", this.pcert);
-  let scertParams = createParamString("Scert_name", this.scert);
-  let mlocationParams = createParamString("MLocation_name", this.Mlocation);
-  let priceStartParam = this.pricest ? `pricestart=${this.pricest}` : "";
-  let priceEndParam = this.priceed ? `pricefinal=${this.priceed}` : "";
-  let moqParam = this.MOQ ? `moqfilt=${this.MOQ}` : "";
+      let slugi = `${baseSlug}${queryParams ? `${queryParams}` : ""}`;
+      if (this.isUsa) {
+        console.log("trueee");
+        if (slugi.length === 29) {
+          console.log("length?", slugi.length);
+          slugi += "?";
+        } else {
+          slugi += "&";
+        }
 
-  let queryParams = [
-    pcertParams,
-    scertParams,
-    mlocationParams,
-    priceStartParam,
-    priceEndParam,
-    moqParam,
-  ]
-  .filter(Boolean)
-  .join("&");
+        // console.log("length&",slugi.length);
+        // slugi += "&";
 
-  let slugi = `${baseSlug}${queryParams ? `${queryParams}` : ""}`;
-  if(this.isUsa)
-  {
-    console.log('trueee');
-    if (slugi.length === 29) {
-    console.log("length?",slugi.length);
-    slugi += "?";
-    
-  }
-  else
-  {
-    slugi += "&";
+        slugi = slugi + "Usabol=" + this.isUsa;
+      }
+      console.log("slugiii==", slugi);
 
-  }
-  
-    // console.log("length&",slugi.length);
-    // slugi += "&";
+      if (slugi == "http://localhost:5000/Products") {
+        console.log("not slugiii");
+        this.$store.dispatch("fetchProducts", slugi);
+        this.$store.dispatch("storeLatestSlug", slugi);
 
-  
-  slugi=slugi+"Usabol="+this.isUsa;
-  }
-  console.log("slugiii==", slugi);
-
-
-  if (slugi == "http://localhost:5000/Products") {
-    console.log("not slugiii");
-    this.$store.dispatch("fetchProducts", slugi);
-    this.$store.dispatch("storeLatestSlug", slugi);
-
-    this.products = data;
-    this.pcertData = [];
-    this.pcertData = this.products.pCertData;
-    this.scertData = [];
-    this.scertData = this.products.sCertData;
-    this.MlocationData = [];
-    this.MlocationData = this.products.MlocationData;
-    this.pricestart = this.products.priceStart;
-    this.priceend = this.products.priceEnd;
-  } else {
-        
-    
-
-    this.$store.dispatch("fetchProducts", slugi);
-    this.$store.dispatch("storeLatestSlug", slugi);
-  }
-},
-
+        this.products = data;
+        this.pcertData = [];
+        this.pcertData = this.products.pCertData;
+        this.scertData = [];
+        this.scertData = this.products.sCertData;
+        this.MlocationData = [];
+        this.MlocationData = this.products.MlocationData;
+        this.pricestart = this.products.priceStart;
+        this.priceend = this.products.priceEnd;
+      } else {
+        this.$store.dispatch("fetchProducts", slugi);
+        this.$store.dispatch("storeLatestSlug", slugi);
+      }
+    },
   },
   //   computed: {},
 };
@@ -327,7 +345,7 @@ export default {
   margin-left: 25px;
   margin-top: 5px;
   margin-bottom: 5px;
-  color: #4CAF50;
+  color: #4caf50;
   text-decoration: underline;
   cursor: pointer;
 }
@@ -338,7 +356,7 @@ export default {
 }
 .leftbox {
   border: 1px solid #e2e8f0;
- 
+
   width: 24%;
   /* height: 1000px; */
   margin-top: 5px;
@@ -366,12 +384,12 @@ export default {
 } */
 .scrollbar::-webkit-scrollbar {
   width: 5px;
-  background-color: rgba(242, 242, 242, 1)
+  background-color: rgba(242, 242, 242, 1);
 }
 
 /* Thumb */
 .scrollbar::-webkit-scrollbar-thumb {
-  background-color: #4CAF50;
+  background-color: #4caf50;
   border-radius: 10px;
 }
 
@@ -472,7 +490,7 @@ export default {
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  
+
   /* text-align: center;
           vertical-align:auto; */
 }

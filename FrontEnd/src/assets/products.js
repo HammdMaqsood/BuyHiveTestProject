@@ -9,9 +9,9 @@ const store = createStore({
     changebol: false,
     page: 1,
     cert: [],
-    Mainbol:false,
-    Subbol:false,
-    Sub_Subbol:false,
+    Mainbol: false,
+    Subbol: false,
+    Sub_Subbol: false,
     modalbol: false,
     McatSelected: "",
     Url: "http://localhost:5000/Products",
@@ -21,48 +21,36 @@ const store = createStore({
     setProducts(state, products) {
       // console.log("ppp==", products);
       state.products = products;
-       console.log("state==", this.state.products.products.name);
+      console.log("state==", this.state.products.products.name);
     },
     setUrl(state, products) {
       // console.log("ppp==", products);
       state.Url = products;
       // console.log("Ur==l", this.state.Url);
     },
-    setMainboltrue(state)
-    {
-      state.Mainbol = true
+    setMainboltrue(state) {
+      state.Mainbol = true;
       console.log("Mainbol==", this.state.Mainbol);
-
     },
-    setMainbolfalse(state)
-    {
+    setMainbolfalse(state) {
       state.Mainbol = false;
       console.log("Mainbol==", this.state.Mainbol);
-
     },
-    setSubboltrue(state)
-    {
+    setSubboltrue(state) {
       state.Subbol = true;
       console.log("Mainbol==", this.state.Subbol);
-
     },
-    setSubbolfalse(state)
-    {
-      state.Subbol= false;
+    setSubbolfalse(state) {
+      state.Subbol = false;
       console.log("Mainbol==", this.state.Subbol);
-
     },
-    setSub_Subboltrue(state)
-    {
+    setSub_Subboltrue(state) {
       state.Sub_Subbol = true;
       console.log("Mainbol==", this.state.Sub_Subbol);
-
     },
-    setSub_Subbolfalse(state)
-    {
-      state.Sub_Subbol= false;
+    setSub_Subbolfalse(state) {
+      state.Sub_Subbol = false;
       console.log("Mainbol==", this.state.Sub_Subbol);
-
     },
     setLatestSlug(state, products) {
       // console.log("ppp==", products);

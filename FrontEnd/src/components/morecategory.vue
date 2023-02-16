@@ -13,26 +13,24 @@
     </div>
     <div class="customspace"></div>
     <div id="catcontainer">
-      <label @click="Fetch_Main(McatData[0].MainCategory_name)" id="labelcatMain">
+      <label
+        @click="Fetch_Main(McatData[0].MainCategory_name)"
+        id="labelcatMain"
+      >
         {{ McatData[0].MainCategory_name }}</label
       >
-      <div v-for="item in McatData[0].subcategories"> <label
-        @click="Fetch_Sub(item.subcategory_name)"
-        id="labelcat"
-        
-      >
-        {{ item.subcategory_name }}
-        
-      </label>
-      <div id="labelsubcatcontainer"  v-for="item in item.sub_subcategories"
-          @click="Fetch_Sub_Sub(item.sub_subcategory_name)">  <label
-          id="labelsubcat"
-         
+      <div v-for="item in McatData[0].subcategories">
+        <label @click="Fetch_Sub(item.subcategory_name)" id="labelcat">
+          {{ item.subcategory_name }}
+        </label>
+        <div
+          id="labelsubcatcontainer"
+          v-for="item in item.sub_subcategories"
+          @click="Fetch_Sub_Sub(item.sub_subcategory_name)"
         >
-          {{ item.sub_subcategory_name }}</label
-        ></div></div>
-      
-        
+          <label id="labelsubcat"> {{ item.sub_subcategory_name }}</label>
+        </div>
+      </div>
     </div>
 
     <!-- <div class="customspace"></div>
@@ -93,7 +91,7 @@ export default {
       this.$store.dispatch("storeLatestSlug", mainslug);
       this.$store.dispatch("ChangeUrl", mainslug);
       this.$store.dispatch("fetchcert", mainslug);
-      console.log('Main slug==',mainslug);
+      console.log("Main slug==", mainslug);
     },
     Fetch_Sub: function (val) {
       val = val.replace(/ /g, "_");
@@ -101,18 +99,17 @@ export default {
       console.log("Sub,", mainslug);
       this.$store.dispatch("ChangeUrl", mainslug);
       this.$store.dispatch("storeLatestSlug", mainslug);
-      console.log('sub slug==',mainslug);
+      console.log("sub slug==", mainslug);
 
       this.$store.dispatch("fetchProducts", mainslug);
       this.$store.dispatch("fetchcert", mainslug);
     },
     Fetch_Sub_Sub: function (val) {
       val = val.replace(/ /g, "_");
-      
 
       const mainslug =
         "http://localhost:5000/Products?sub_subcategory_name=" + val;
-        console.log('subsub slud==',mainslug);
+      console.log("subsub slud==", mainslug);
       this.$store.dispatch("fetchProducts", mainslug);
       this.$store.dispatch("storeLatestSlug", mainslug);
       this.$store.dispatch("ChangeUrl", mainslug);
@@ -127,25 +124,20 @@ export default {
   margin-left: 35px;
   font-size: 95%;
 }
-#labelcatMain
-{
+#labelcatMain {
   margin-left: 35px;
   font-size: 95%;
   color: black;
   font-weight: bold;
-
 }
-#labelsubcatcontainer
-{
+#labelsubcatcontainer {
   display: flex;
-
 }
 
-  #labelsubcat {
+#labelsubcat {
   margin-left: 45px;
   font-size: smaller;
 }
-
 
 #catcontainer {
   display: flex;
