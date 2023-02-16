@@ -1,10 +1,7 @@
 <template>
   <div id="container">
-    <div id="right">
-      
-    </div>
+    <div id="right"></div>
     <div id="left">
-
       <div id="sortcontainer">
         <div class="dropdown">
           <div class="dropdown-toggle" @mouseenter="isOpen = true">
@@ -62,14 +59,17 @@
           <div>of {{ products.totalPages }}</div>
         </div>
 
-        <div class="arrowouter" @click="nextpage">
+        <div
+          class="arrowouter"
+          @click="nextpage"
+          :disabled="isLastPage || disabled"
+        >
           <div><img id="leftimg" src="../assets/next.png" /></div>
         </div>
       </div>
     </div>
     <div class="dropdown-wrapper"></div>
   </div>
-  <!-- <button @click="nexpage">next</button> -->
 </template>
 
 <script>
@@ -80,7 +80,7 @@ export default {
       sort: "default",
       selectedOption: "Relevance",
       isOpen: true,
-      leftarrow: "<",
+      disabled: false,
     };
   },
   watch: {},
@@ -90,47 +90,39 @@ export default {
       let baseSlug = this.slug;
       if (baseSlug.indexOf("?") === -1) {
         baseSlug = baseSlug + "?page=" + this.page + "&sort=" + val;
-        console.log("if");
       } else {
-        console.log("else");
         baseSlug = baseSlug + "&page=" + this.page + "&sort=" + val;
       }
-      console.log("this.selected==", val);
 
       this.$store.dispatch("fetchProducts", baseSlug);
-      console.log("wtf?=", baseSlug);
     },
     nextpage() {
-      this.page++;
+      if (this.products.currentPage != this.products.totalPages) {
+        this.page++;
 
-      let baseSlug = this.slug;
-      if (baseSlug.indexOf("?") === -1) {
-        baseSlug = baseSlug + "?page=" + this.page;
-        console.log("if");
-      } else {
-        console.log("else");
-        baseSlug = baseSlug + "&page=" + this.page;
+        let baseSlug = this.slug;
+        if (baseSlug.indexOf("?") === -1) {
+          baseSlug = baseSlug + "?page=" + this.page;
+        } else {
+          baseSlug = baseSlug + "&page=" + this.page;
+        }
+
+        this.$store.dispatch("fetchProducts", baseSlug);
       }
-      console.log("this.selected==", this.page);
-
-      this.$store.dispatch("fetchProducts", baseSlug);
-      console.log("wtf?=", baseSlug);
     },
     previouspage() {
-      this.page--;
+      if (this.products.currentPage != this.products.totalPages) {
+        this.page--;
 
-      let baseSlug = this.slug;
-      if (baseSlug.indexOf("?") === -1) {
-        baseSlug = baseSlug + "?page=" + this.page;
-        console.log("if");
-      } else {
-        console.log("else");
-        baseSlug = baseSlug + "&page=" + this.page;
+        let baseSlug = this.slug;
+        if (baseSlug.indexOf("?") === -1) {
+          baseSlug = baseSlug + "?page=" + this.page;
+        } else {
+          baseSlug = baseSlug + "&page=" + this.page;
+        }
+
+        this.$store.dispatch("fetchProducts", baseSlug);
       }
-      console.log("this.selected==", this.page);
-
-      this.$store.dispatch("fetchProducts", baseSlug);
-      console.log("wtf?=", baseSlug);
     },
   },
   mounted() {},
@@ -140,6 +132,9 @@ export default {
     },
     products() {
       return this.$store.state.products;
+    },
+    isLastPage() {
+      return this.products.currentPage === this.products.totalPages;
     },
   },
 };
@@ -156,9 +151,7 @@ export default {
   margin-left: 10px;
   margin-top: 6px;
 }
-/* #moreleft{
-  text-align: end;
-} */
+
 .arrowouter {
   float: left;
   display: flex;
@@ -193,23 +186,15 @@ export default {
 
   align-items: center;
 }
-#sortcontainer
-{
-  /* border:2px solid black; */
+#sortcontainer {
   width: 50%;
 }
 
-#pagecontainer
-{
-  /* border:2px solid black; */
+#pagecontainer {
   float: left;
-width: 50%;
-  
-
-
+  width: 50%;
 }
 #container {
-  /* border: 2px solid black; */
   height: 100px;
   width: 90%;
 }
@@ -232,11 +217,9 @@ li {
   background-color: rgba(242, 242, 242, 1);
   border: 1px solid #e7e7e7;
   outline: 0px;
-  /* text-align: center; */
-  /* font-size: 100%; */
+
   text-align: start;
-  /* vertical-align: middle; */
-  /* vertical-align: middle; */
+
   color: black;
 }
 
@@ -288,15 +271,10 @@ li {
 .dropdown-menu li:hover {
   color: #29b574;
 }
-/* p{
-  font-size: large;
-} */
+
 #right {
   width: 50%;
   height: 80px;
-
-  /* background-color: black; */
-  /* border: 2px solid black; */
   float: left;
 }
 #left {
@@ -306,8 +284,7 @@ li {
   width: 50%;
   height: 80px;
 }
-#customspace
-{
+#customspace {
   width: 5%;
 }
 </style>

@@ -11,7 +11,6 @@
         />
         <p>Categories</p>
       </div>
-      <!-- <button v-on:click="showModal = true" id="catbtn"> <img src="https://img.icons8.com/material-outlined/24/0096FF/four-squares.png" />Categories</button> -->
       <div id="searchouter">
         <input
           id="search"
@@ -35,7 +34,6 @@
     </div>
   </div>
   <div>
-    <!-- <button @click="showModal = true" class="button">Show Modal</button> -->
     <transition name="fade" appear>
       <div
         class="modal-overlay"
@@ -91,7 +89,6 @@ export default {
       this.McatData = this.Cat.MainCategories.filter((el) => {
         return el.MainCategory_name == val;
       });
-      console.log("ok?jans", this.McatData);
       this.$store.dispatch("storeMcatSelected", this.McatData);
 
       this.slug = "http://localhost:5000/products?MainCategory_name=" + val;
@@ -101,40 +98,29 @@ export default {
       this.$store.dispatch("fetchcert", this.slug);
       this.$store.dispatch("ChangeUrl", this.slug);
       this.$store.dispatch("storeLatestSlug", this.slug);
-
-      // console.log("value==", val);
     },
     handle_sub: function (val) {
-      (this.showModal = false), console.log("ok?jans");
+      this.showModal = false;
       this.McatData = this.Cat.MainCategories.filter((category) => {
         return category.subcategories.some(
           (subcategory) => subcategory.subcategory_name === val
         );
       });
       this.$store.dispatch("storeMcatSelected", this.McatData);
-
       this.slug = "http://localhost:5000/products?subcategory_name=" + val;
-
       this.$store.commit("setmodaltrue");
       this.$store.dispatch("fetchProducts", this.slug);
       this.$store.dispatch("storeLatestSlug", this.slug);
-
       this.$store.dispatch("fetchcert", this.slug);
       this.$store.dispatch("ChangeUrl", this.slug);
     },
     fs() {
-      //   this.Mcatbol = false;
       this.$store.commit("setmodalfase");
 
       this.slug = "http://localhost:5000/products";
 
       if (this.search != "" && this.selected != "All Categories") {
-        // this.McatData = this.Category.MainCategories.filter((el) => {
-        //   return el.MainCategory_name == this.selected;
-        // });
-        // this.Mcatbol = true;
         this.$store.commit("setmodaltrue");
-        // this.$store.dispatch("storeMcatSelected", this.selected);
         this.slug =
           this.slug +
           "?name=" +
@@ -149,38 +135,14 @@ export default {
         });
         this.$store.dispatch("storeMcatSelected", this.McatData);
 
-        // this.Mcatbol = true;
         this.$store.commit("setmodaltrue");
 
         this.slug = this.slug + "?MainCategory_name=" + this.selected;
-
-        // console.log("mCAT data=", this.McatData[0].subcategories);
       }
       this.$store.dispatch("fetchProducts", this.slug);
       this.$store.dispatch("storeLatestSlug", this.slug);
       this.$store.dispatch("fetchcert", this.slug);
       this.$store.dispatch("ChangeUrl", this.slug);
-
-      //   fetch(this.slug)
-      //     .then((response) => response.json())
-      //     .then((data) => {
-      //       //console.log(data);
-      //       // this.products = data;
-
-      //       this.products = data;
-      //     //   this.pcertData = [];
-      //     //   this.pcertData = this.products.pCertData;
-      //     //   this.scertData = [];
-      //     //   this.scertData = this.products.sCertData;
-      //     //   this.MlocationData = [];
-      //     //   this.MlocationData = this.products.MlocationData;
-      //     //   this.pricestart = this.products.priceStart;
-      //     //   this.priceend = this.products.priceEnd;
-
-      //       console.log("Data", this.products.pCertData);
-      //     });
-
-      //  this.repeat();
     },
   },
 };
@@ -201,7 +163,6 @@ export default {
 }
 #searchouter {
   width: 75%;
-  /* Can be in percentage also. */
   height: 40px;
   margin: 0 auto;
   padding: 10px;
@@ -232,10 +193,8 @@ export default {
   font-size: 100%;
   align-items: center;
   justify-content: center;
-  /* background-color: #000; */
 
   text-align: center;
-  /* background-color: black; */
   margin: auto;
 }
 p{
@@ -250,8 +209,6 @@ img
 }
 #transcontainer
 {
-  /* align-items: flex-start;
-  text-align: left; */
   width: 10%;
 
 
@@ -296,12 +253,10 @@ img
 }
 #search {
   background-color: white;
-  /* display: flex;
-          align-self: center; */
+
   width: 73%;
   height: 20px;
-  /* border-radius: 20px; */
-  /* margin-top: 50px; */
+
   border-color: white;
   border: 0;
   outline: 0;
@@ -321,13 +276,10 @@ img
   outline: 0;
   font-size: 100%;
   margin-right: auto;
-
-  /* margin: 20px 0 20px 0; */
 }
 .dropdown {
   width: 25%;
   --text-opacity:1,
-  /* customize Select tag(DropDown options) with id="alphalist" */
   display: inline-block;
   background-color: white;
   border-radius: 10px;
@@ -373,9 +325,6 @@ body {
 }
 
 .modal {
-  /* box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2); */
-  /* background:rgba(242, 242, 242, 255); */
-
   transform: none;
   background-color: rgba(242, 242, 242, 255);
   width: 90%;
@@ -384,12 +333,10 @@ body {
   flex-direction: row;
   flex-wrap: wrap;
  position: absolute;
-  /* justify-content: center;
-  align-items: center; */
+
   margin: 0px auto 0px 62px;
    z-index: 2;
-  /* border-radius: 10px; */
-  /* position: fixed; */
+
 }
 .modal h1 {
   margin: 0 0 1rem;
@@ -397,8 +344,7 @@ body {
 
 .modal-overlay {
   content: "";
-  /* position: absolute;
-  position: fixed; */
+
   position: relative;
   top: 0;
   right: 0;

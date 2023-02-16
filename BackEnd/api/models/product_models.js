@@ -23,15 +23,12 @@ const productSchema = mongoose.Schema({
   },
   isUsa: { type: Boolean },
   piece: { type: String, required: true },
-  // ManufactureLocation:String,
-  // link:{type:String,required:false},
   MainCategory_id: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
     ref: "MainCategory",
   },
   subcategory_id: { type: mongoose.Schema.Types.ObjectId, ref: "MainCategory" },
-  // sub_subcategory_id:{type:String,required:true,ref:'MainCategory'},
 });
 
 module.exports = mongoose.model("Product", productSchema);

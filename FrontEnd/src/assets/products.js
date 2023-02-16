@@ -1,7 +1,6 @@
-// Import Vuex
 import { createStore } from "vuex";
+import axios from "axios";
 
-// Create a new Vuex store
 const store = createStore({
   state: {
     products: [],
@@ -19,58 +18,40 @@ const store = createStore({
   },
   mutations: {
     setProducts(state, products) {
-      // console.log("ppp==", products);
       state.products = products;
-      console.log("state==", this.state.products.products.name);
     },
     setUrl(state, products) {
-      // console.log("ppp==", products);
       state.Url = products;
-      // console.log("Ur==l", this.state.Url);
     },
     setMainboltrue(state) {
       state.Mainbol = true;
-      console.log("Mainbol==", this.state.Mainbol);
     },
     setMainbolfalse(state) {
       state.Mainbol = false;
-      console.log("Mainbol==", this.state.Mainbol);
     },
     setSubboltrue(state) {
       state.Subbol = true;
-      console.log("Mainbol==", this.state.Subbol);
     },
     setSubbolfalse(state) {
       state.Subbol = false;
-      console.log("Mainbol==", this.state.Subbol);
     },
     setSub_Subboltrue(state) {
       state.Sub_Subbol = true;
-      console.log("Mainbol==", this.state.Sub_Subbol);
     },
     setSub_Subbolfalse(state) {
       state.Sub_Subbol = false;
-      console.log("Mainbol==", this.state.Sub_Subbol);
     },
     setLatestSlug(state, products) {
-      // console.log("ppp==", products);
       state.LatestSlug = products;
-      console.log("nice", this.state.LatestSlug);
     },
     setMcatSelected(state, products) {
-      // console.log("ppp==", products);
       state.McatSelected = products;
     },
     setmodalfase(state) {
-      // console.log("ppp==", products);
       state.modalbol = false;
-      // console.log("false==", this.state.modalbol);
-      // console.log("state==", this.state.products);
     },
     setmodaltrue(state) {
-      // console.log("ppp==", products);
       state.modalbol = true;
-      console.log("tue==", this.state.modalbol);
     },
     setchangebol(state) {
       state.changebol = !state.changebol;
@@ -79,14 +60,10 @@ const store = createStore({
       state.page = pg;
     },
     setCategory(state, Category) {
-      // console.log("ppp==", Category);
       state.Category = Category;
-      // console.log("state==CAT", this.state.Category);
     },
     setcert(state, Category) {
-      // console.log("ppp==", Category);
       state.cert = Category;
-      // console.log("modal", this.state.cert);
     },
     addProduct(state, product) {
       state.products.push(product);
@@ -96,26 +73,23 @@ const store = createStore({
     },
   },
   actions: {
-    fetchProducts({ commit }, url) {
-      fetch(url)
-        .then((response) => response.json())
-        .then((data) => {
-          commit("setProducts", data);
-        });
+    async fetchProducts({ commit }, url) {
+      try {
+        const response = await axios.get(url);
+        commit("setProducts", response.data);
+      } catch (error) {}
     },
-    fetchCategory({ commit }, url) {
-      fetch(url)
-        .then((response) => response.json())
-        .then((data) => {
-          commit("setCategory", data);
-        });
+    async fetchCategory({ commit }, url) {
+      try {
+        const response = await axios.get(url);
+        commit("setCategory", response.data);
+      } catch (error) {}
     },
-    fetchcert({ commit }, url) {
-      fetch(url)
-        .then((response) => response.json())
-        .then((data) => {
-          commit("setcert", data);
-        });
+    async fetchcert({ commit }, url) {
+      try {
+        const response = await axios.get(url);
+        commit("setcert", response.data);
+      } catch (error) {}
     },
     storeMcatSelected({ commit }, data) {
       commit("setMcatSelected", data);
@@ -135,5 +109,4 @@ const store = createStore({
   },
 });
 
-// Export the store
 export default store;

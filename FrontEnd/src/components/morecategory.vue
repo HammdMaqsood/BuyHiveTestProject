@@ -32,21 +32,6 @@
         </div>
       </div>
     </div>
-
-    <!-- <div class="customspace"></div>
-    <div id="catcontainer">
-      <label id="labelcat"> {{ this.McatData[0].MainCategory_name }}</label>
-      <label id="labelcat" v-for="item in McatData[0].subcategories">
-        {{ item.subcategory_name }}
-        <label
-          id="labelcat"
-          v-for="item in item.sub_subcategories"
-          @click="handle_sub_sub(item.sub_subcategory_name)"
-        >
-          -> {{ item.sub_subcategory_name }}</label
-        >
-      </label>
-    </div> -->
   </div>
 </template>
 
@@ -55,7 +40,6 @@ export default {
   data() {
     return {
       McatSearch: "",
-      //   McatData: [],
       Mcat: [],
       Mcatbol: true,
       Maincat: "",
@@ -91,15 +75,12 @@ export default {
       this.$store.dispatch("storeLatestSlug", mainslug);
       this.$store.dispatch("ChangeUrl", mainslug);
       this.$store.dispatch("fetchcert", mainslug);
-      console.log("Main slug==", mainslug);
     },
     Fetch_Sub: function (val) {
       val = val.replace(/ /g, "_");
       const mainslug = "http://localhost:5000/Products?subcategory_name=" + val;
-      console.log("Sub,", mainslug);
       this.$store.dispatch("ChangeUrl", mainslug);
       this.$store.dispatch("storeLatestSlug", mainslug);
-      console.log("sub slug==", mainslug);
 
       this.$store.dispatch("fetchProducts", mainslug);
       this.$store.dispatch("fetchcert", mainslug);
@@ -109,7 +90,6 @@ export default {
 
       const mainslug =
         "http://localhost:5000/Products?sub_subcategory_name=" + val;
-      console.log("subsub slud==", mainslug);
       this.$store.dispatch("fetchProducts", mainslug);
       this.$store.dispatch("storeLatestSlug", mainslug);
       this.$store.dispatch("ChangeUrl", mainslug);
@@ -189,9 +169,5 @@ export default {
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  /* text-align: center;
-          vertical-align:auto; */
 }
-
-/* Your CSS here */
 </style>

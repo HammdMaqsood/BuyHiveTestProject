@@ -1,39 +1,18 @@
 const express = require("express");
 const app = express();
-const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
-const fs = require("fs");
-const path = "./uploads";
-
-const productRoutes = require("./api/routes/products");
-const ProductCertifications = require("./api/routes/ProductCertifications");
-const ManufactureLocation = require("./api/routes/ManufactureLocation");
-
-const MainCategoryRoutes = require("./api/routes/MainCategory");
-const SupplierCertifcations = require("./api/routes/SupplierCertifications");
-
+const routes = require("./api/routes/index");
+require("dotenv").config();
+console.log("key==", process.env.MONGO_ATLAS_PW);
 mongoose.connect(
   "mongodb+srv://hammadch811314:" +
-    process.env.MONGO_ATLAS_PW +
+    "bMjhtLWvEUbZFDEq" +
     "@cluster0.jtw4fht.mongodb.net/?retryWrites=true&w=majority"
 );
 
-if (!fs.existsSync(path)) {
-  fs.mkdir(path, (err) => {
-    if (err) {
-      console.error(err);
-    } else {
-      console.log("Directory created successfully.");
-    }
-  });
-}
-
-app.use(morgan("dev"));
-app.use("/uploads", express.static("uploads"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
@@ -47,12 +26,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/products", productRoutes);
-
-app.use("/MainCategory", MainCategoryRoutes);
-app.use("/ProductCertifications", ProductCertifications);
-app.use("/SupplierCertifications", SupplierCertifcations);
-app.use("/ManufactureLocation", ManufactureLocation);
+app.use("/", routes);
 
 app.use((req, res, next) => {
   const error = new Error("Not found");

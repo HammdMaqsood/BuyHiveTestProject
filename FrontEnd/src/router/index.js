@@ -1,19 +1,15 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import Showblog from '../components/Showblog.vue'
-// import SingleBlog from '../components/SingleBlog.vue'
+import { createRouter, createWebHistory } from "vue-router";
+import MainComp from "../components/MainComp.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
-      name: 'ShowBlog',
-      component: Showblog,
+      path: "/",
+      name: "MainComp",
+      component: MainComp,
     },
-    
-    
-    
-  ]
-})
+  ],
+});
 
-export default router
+export default router;

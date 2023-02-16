@@ -2,8 +2,6 @@
   <header>
     <nav>
       <ul>
-        <!-- <li><RouterLink to="/">Home</RouterLink></li>
-            <li><RouterLink to="/add">AddBlog</RouterLink></li> -->
         <li>LOGO</li>
         <li>Expert Sourcing</li>
         <li>Contract Manufacturing</li>
@@ -37,7 +35,6 @@ ul {
 }
 li {
   display: inline-block;
-  /* margin: 0 10px; */
   margin-right: 50px;
 }
 a {
@@ -47,7 +44,6 @@ a {
   border-radius: 10px;
 }
 nav {
-  /* background: #444; */
   padding: 14px 0;
   width: 100%;
 }
