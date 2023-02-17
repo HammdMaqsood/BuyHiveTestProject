@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const productcert = require("../models/ProductCertifications_model");
+const productcert = require("../models/ProductCertificationsModel");
 
 exports.ProductCertifications_create_product = async (req, res, next) => {
   try {

@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const mlocation = require("../models/ManufactureLocation_model");
+const mlocation = require("../models/ManufactureLocationModel");
 
 exports.ManufactureLocation_create = async (req, res, next) => {
   try {

@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const MainCategory = require("../models/MainCategory_model");
+const MainCategory = require("../models/MainCategoryModel");
 
 exports.mainCategory_get_all = async (req, res, next) => {
   try {
@@ -15,7 +15,6 @@ exports.mainCategory_get_all = async (req, res, next) => {
           MainCategoty_id: doc.MainCategoty_id,
           MainCategory_name: doc.MainCategory_name,
           subcategories: doc.subcategories,
-          
         };
       }),
     });
@@ -42,7 +41,6 @@ exports.mainCategory_create = async (req, res, next) => {
         MainCategoty_id: result.MainCategoty_id,
         MainCategory_name: result.MainCategory_name,
         subcategories: result.subcategories,
-       
       },
     });
   } catch (err) {

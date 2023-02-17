@@ -57,10 +57,17 @@
       label="Manufacture Location"
       @data-emitted="MLocationreceiveData"
     ></category_input_comp>
+    <h3 class="label">Stock Availability</h3>
+
+    <div id="checkboxes">
+      <input type="checkbox" v-model="isUsa" class="labelselect" value="true" />
+      <label class="labelselect">USA</label>
+    </div>
   </div>
 </template>
 <script setup>
 import category_input_comp from "./category_input_comp.vue";
+import morecategory from "./morecategory.vue";
 </script>
 
 <script>
@@ -215,6 +222,7 @@ export default {
   color: black;
 }
 #numberinputdollar {
+  cursor:auto;
   width: 20%;
   border-radius: 20px;
   height: 38px;
@@ -240,6 +248,15 @@ export default {
   display: flex;
   flex-direction: row;
   height: 95px;
+}
+.labelselect {
+  margin-left: 25px;
+}
+
+.label {
+  margin-left: 18px;
+  margin-top: 40px;
+  margin-bottom: 20px;
 }
 #productscount {
   margin: auto 4px auto 0px;

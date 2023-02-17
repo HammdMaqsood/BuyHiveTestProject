@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const Product = require("../models/product_models");
+const Product = require("../models/productModels");
 
 exports.products_get_all = async (req, res) => {
   try {
@@ -76,14 +76,7 @@ exports.products_get_all = async (req, res) => {
           as: "maincategory",
         },
       },
-      {
-        $lookup: {
-          from: "maincategories.subcategories",
-          localField: "subcategory_id",
-          foreignField: "_id",
-          as: "subcategory",
-        },
-      },
+
       {
         $project: {
           _id: 1,
@@ -105,15 +98,27 @@ exports.products_get_all = async (req, res) => {
           MainCategory_name: {
             $arrayElemAt: ["$maincategory.MainCategory_name", 0],
           },
-          MainCategories: {
-            $arrayElemAt: ["$maincategory.MainCategory_name.subcategories", 0],
-          },
+
           subcategory_id: 1,
           subcategory_name: {
-            $arrayElemAt: ["$subcategory.subcategory_name", 0],
+            $let: {
+              vars: {
+                matchingSubcategory: {
+                  $filter: {
+                    input: { $arrayElemAt: ["$maincategory.subcategories", 0] },
+                    cond: { $eq: ["$$this._id", "$subcategory_id"] },
+                  },
+                },
+              },
+              in: {
+                $arrayElemAt: ["$$matchingSubcategory.subcategory_name", 0],
+              },
+            },
           },
+          sub_subcategory_id: 1,
         },
       },
+
       {
         $match: match,
       },
@@ -169,12 +174,9 @@ exports.products_get_all = async (req, res) => {
             MainCategory_id: doc.MainCategory_id,
             MainCategory_name: doc.MainCategory_name,
             subcategory_id: doc.subcategory_id,
+            sub_subcategory_id: doc.sub_subcategory_id,
             subcategory_name: doc.subcategory_name,
-
-            request: {
-              type: "GET",
-              url: "http://localhost:3000/products/" + doc._id,
-            },
+            sub_subcategories: doc.sub_subcategories,
           };
         }),
         currentPage: page,

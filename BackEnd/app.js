@@ -1,14 +1,12 @@
+require("dotenv").config();
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const routes = require("./api/routes/index");
-require("dotenv").config();
-console.log("key==", process.env.MONGO_ATLAS_PW);
+
 mongoose.connect(
-  "mongodb+srv://hammadch811314:" +
-    "bMjhtLWvEUbZFDEq" +
-    "@cluster0.jtw4fht.mongodb.net/?retryWrites=true&w=majority"
+  `mongodb+srv://hammadch811314:${process.env.PW}@cluster0.jtw4fht.mongodb.net/?retryWrites=true&w=majority`
 );
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -33,7 +31,6 @@ app.use((req, res, next) => {
   error.status = 404;
   next(error);
 });
-
 app.use((error, req, res, next) => {
   res.status(error.status || 500);
   res.json({

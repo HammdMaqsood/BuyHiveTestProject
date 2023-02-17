@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const ProductsCertificationsController = require("../controllers/ProductsCertifications_controllers");
+const ProductsCertificationsController = require("../controllers/ProductsCertificationsControllers");
 
 router.post(
   "/",

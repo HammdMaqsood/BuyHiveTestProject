@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const suppliercert = require("../models/SupplierCertifcations_model");
+const suppliercert = require("../models/SupplierCertifcationsModel");
 
 exports.SupplierCertifications_create = async (req, res, next) => {
   try {
