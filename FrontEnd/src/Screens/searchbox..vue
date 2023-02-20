@@ -29,8 +29,8 @@
           </option>
         </select>
       </div>
-
-      <button id="searchbtn" v-on:click="fs">Search</button>
+      <!-- <button id="searchbtn" v-on:click="fs">Search</button> -->
+      <button_comp type="search" @data-emitted="fs"></button_comp>
     </div>
   </div>
   <div>
@@ -60,6 +60,9 @@
     </transition>
   </div>
 </template>
+<script setup>
+import Button_comp from "../components/Button.vue";
+</script>
 
 <script>
 export default {
@@ -67,11 +70,16 @@ export default {
     return {
       products: [],
       slug: "",
-
       selected: "All Categories",
       search: "",
       showModal: false,
     };
+  },
+  watch: {
+    bol: function (newVal, oldVal) {
+      this.fs();
+      console.log("watch is actibe");
+    },
   },
   computed: {
     Cat() {
@@ -115,6 +123,7 @@ export default {
       this.$store.dispatch("ChangeUrl", this.slug);
     },
     fs() {
+      console.log("fsss");
       this.$store.commit("setmodalfase");
 
       this.slug = "http://localhost:5000/products";
@@ -215,11 +224,6 @@ img
   margin: 10px 0px 6px 30px;
   text-align: left;
   z-index: 1;
-
-
-
-
-
 }
 #transhmain
 {
@@ -311,19 +315,6 @@ body {
   place-items: center;
   font-size: 1.4rem;
 }
-
-.button {
-  border: none;
-  color: rgba(242, 242, 242, 255);
-  background: #42b983;
-  appearance: none;
-  font: inherit;
-  font-size: 1.8rem;
-  padding: 0.5em 1em;
-  border-radius: 0.3em;
-  cursor: pointer;
-}
-
 .modal {
   transform: none;
   background-color: rgba(242, 242, 242, 255);
@@ -332,9 +323,8 @@ body {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
- position: absolute;
-
-  margin: 0px auto 0px 62px;
+  position: absolute;
+  margin: 0px auto 0px 70px;
    z-index: 2;
 
 }
@@ -363,16 +353,5 @@ body {
 .fade-enter,
 .fade-leave-to {
   opacity: 0;
-}
-
-.pop-enter-active,
-.pop-leave-active {
-  transition: transform 0.4s cubic-bezier(0.5, 0, 0.5, 1), opacity 0.4s linear;
-}
-
-.pop-enter,
-.pop-leave-to {
-  opacity: 0;
-  transform: scale(0.3) translateY(-50%);
 }
 </style>

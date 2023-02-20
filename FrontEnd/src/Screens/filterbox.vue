@@ -4,7 +4,7 @@
     <h3 id="productscount2">({{ products.count }} Products)</h3>
   </div>
   <div class="leftbox">
-    <morecategory />
+    <MoreCategory />
     <h3 class="label">Price</h3>
     <div class="container">
       <div id="numberinputdiv">
@@ -34,29 +34,28 @@
     <h3 class="label">MOQ</h3>
 
     <div class="container">
-      <input
+      <InputBox
+        :label="moqstr"
+        @data-emitted="moqdata"
         type="number"
-        :placeholder="moqstr"
-        id="numberinputMOQ"
-        v-model="MOQ"
-      />
+      ></InputBox>
     </div>
 
-    <category_input_comp
+    <FilterCertificatoin
       v-bind:Data="certData.pCertData"
       label="Product Certification"
       @data-emitted="pcertreceiveData"
-    ></category_input_comp>
-    <category_input_comp
+    ></FilterCertificatoin>
+    <FilterCertificatoin
       v-bind:Data="certData.sCertData"
       label="Supplier Certification"
       @data-emitted="scertreceiveData"
-    ></category_input_comp>
-    <category_input_comp
+    ></FilterCertificatoin>
+    <FilterCertificatoin
       v-bind:Data="certData.MlocationData"
       label="Manufacture Location"
       @data-emitted="MLocationreceiveData"
-    ></category_input_comp>
+    ></FilterCertificatoin>
     <h3 class="label">Stock Availability</h3>
 
     <div id="checkboxes">
@@ -66,8 +65,9 @@
   </div>
 </template>
 <script setup>
-import category_input_comp from "./category_input_comp.vue";
-import morecategory from "./morecategory.vue";
+import InputBox from "../components/InputBox.vue";
+import MoreCategory from "../components/MoreCategory.vue";
+import FilterCertificatoin from "../components/FilterCertificatoin.vue";
 </script>
 
 <script>
@@ -135,6 +135,10 @@ export default {
     MLocationreceiveData(data) {
       this.Mlocation = data;
     },
+    moqdata(data) {
+      this.MOQ = data;
+      console.log("moq==", data);
+    },
     updateProducts() {
       let baseSlug = this.Uri;
       if (baseSlug.indexOf("?") === -1) {
@@ -195,6 +199,8 @@ export default {
   margin-top: 5px;
   float: left;
   margin-left: 2px;
+  padding-bottom: 20px;
+  margin-bottom: 50px;
 }
 
 #numberinput {
@@ -222,7 +228,7 @@ export default {
   color: black;
 }
 #numberinputdollar {
-  cursor:auto;
+  cursor: auto;
   width: 20%;
   border-radius: 20px;
   height: 38px;
@@ -232,18 +238,7 @@ export default {
   text-align: end;
   color: black;
 }
-#numberinputMOQ {
-  width: 85%;
-  border-radius: 20px;
-  height: 40px;
-  background-color: rgba(242, 242, 242, 1);
-  border: 1px solid #e2e8f0;
-  outline: 0px;
-  text-align: center;
-  font-size: 100%;
-  color: black;
-  float: left;
-}
+
 #spacebw {
   display: flex;
   flex-direction: row;

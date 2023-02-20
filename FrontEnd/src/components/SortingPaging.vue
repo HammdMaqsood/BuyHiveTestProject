@@ -39,7 +39,7 @@
                   selectedOption = 'MOQ Low to High';
                 "
               >
-                Price MOQ Low to High
+                MOQ Low to High
               </li>
             </ul>
           </div>
@@ -97,7 +97,7 @@ export default {
       this.$store.dispatch("fetchProducts", baseSlug);
     },
     nextpage() {
-      if (this.products.currentPage != this.products.totalPages) {
+      if (this.page != this.products.totalPages) {
         this.page++;
 
         let baseSlug = this.slug;
@@ -111,7 +111,7 @@ export default {
       }
     },
     previouspage() {
-      if (this.products.currentPage != this.products.totalPages) {
+      if (this.page != 1) {
         this.page--;
 
         let baseSlug = this.slug;

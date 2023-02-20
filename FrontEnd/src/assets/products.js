@@ -65,31 +65,40 @@ const store = createStore({
     setcert(state, Category) {
       state.cert = Category;
     },
-    addProduct(state, product) {
-      state.products.push(product);
-    },
-    removeProduct(state, productId) {
-      state.products = state.products.filter((p) => p.id !== productId);
-    },
   },
   actions: {
     async fetchProducts({ commit }, url) {
       try {
         const response = await axios.get(url);
         commit("setProducts", response.data);
-      } catch (error) {}
+      } catch (error) {
+        console.log(error);
+        res.status(404).json({
+          error: error,
+        });
+      }
     },
     async fetchCategory({ commit }, url) {
       try {
         const response = await axios.get(url);
         commit("setCategory", response.data);
-      } catch (error) {}
+      } catch (error) {
+        console.log(error);
+        res.status(404).json({
+          error: error,
+        });
+      }
     },
     async fetchcert({ commit }, url) {
       try {
         const response = await axios.get(url);
         commit("setcert", response.data);
-      } catch (error) {}
+      } catch (error) {
+        console.log(error);
+        res.status(404).json({
+          error: error,
+        });
+      }
     },
     storeMcatSelected({ commit }, data) {
       commit("setMcatSelected", data);

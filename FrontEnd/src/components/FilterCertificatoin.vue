@@ -2,12 +2,7 @@
   <h3 class="label">{{ this.label }}</h3>
   <div class="container">
     <div id="certouter">
-      <input
-        v-model="certsearch"
-        type="text"
-        placeholder="Search Categories.."
-        id="numberinputcert"
-      />
+      <InputBox :label="label" @data-emitted-search="recsearch"></InputBox>
     </div>
   </div>
   <div class="customspace"></div>
@@ -23,14 +18,19 @@
       <label class="labelselect">{{ item }}</label>
     </div>
   </div>
-  <P class="labelseeall" @click="certshowAll = true" v-if="!certshowAll"
-    >Show all</P
-  >
-  <P class="labelseeall" @click="certshowAll = false" v-if="certshowAll"
-    >Show Less</P
-  >
+
+  <div v-if="showbol">
+    <P class="labelseeall" @click="certshowAll = true" v-if="!certshowAll"
+      >Show all</P
+    >
+    <P class="labelseeall" @click="certshowAll = false" v-if="certshowAll"
+      >Show Less</P
+    >
+  </div>
 </template>
-<script setup></script>
+<script setup>
+import InputBox from "./InputBox.vue";
+</script>
 
 <script>
 export default {
@@ -43,8 +43,6 @@ export default {
       pcertParams: "",
       scertParams: "",
       MLocationparam: "",
-      ok: "",
-      ok2: [],
     };
   },
   watch: {
@@ -52,7 +50,6 @@ export default {
       this.updateProducts();
     },
   },
-
   created() {},
   computed: {
     Uri() {
@@ -67,11 +64,22 @@ export default {
         return this.Data;
       }
     },
+    datalength() {
+      return this.Data.length;
+    },
+    showbol() {
+      if (this.DATA && this.DATA.length > 2) {
+        return true;
+      } else return false;
+    },
   },
 
   methods: {
     sendData(val) {
       this.$emit("data-emitted", val);
+    },
+    recsearch(data) {
+      this.certsearch = data;
     },
     updateProducts() {
       function createParamString(name, values) {
@@ -93,14 +101,6 @@ export default {
         this.MLocationparam = createParamString("MLocation_name", this.cert);
         this.sendData(this.MLocationparam);
       }
-
-      let queryParams = [
-        this.pcertParams,
-        this.scertParams,
-        this.MLocationparam,
-      ]
-        .filter(Boolean)
-        .join("&");
     },
   },
 };
@@ -110,7 +110,6 @@ export default {
 .labelselect {
   margin-left: 25px;
 }
-
 .label {
   margin-left: 18px;
   margin-top: 40px;

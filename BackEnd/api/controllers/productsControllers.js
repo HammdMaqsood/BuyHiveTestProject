@@ -144,12 +144,14 @@ exports.products_get_all = async (req, res) => {
       let matchQuery = { [`${key}`]: { $in: values } };
       pipeline.splice(pipeline.length - 2, 0, { $match: matchQuery });
     }
-
     try {
-      const docs = await Product.aggregate(pipeline).exec();
+      const [docs, count] = await Promise.all([
+        Product.aggregate(pipeline).exec(),
+        Product.countDocuments(match).exec(),
+      ]);
       const prices = docs.map((doc) => doc.price);
       const response = {
-        count: docs.length,
+        count: count,
         pCertData: Array.from(new Set(docs.map((doc) => doc.Pcert_name))),
         sCertData: Array.from(new Set(docs.map((doc) => doc.Scert_name))),
         MlocationData: Array.from(
@@ -179,10 +181,10 @@ exports.products_get_all = async (req, res) => {
             sub_subcategories: doc.sub_subcategories,
           };
         }),
-        currentPage: page,
         priceStart: Math.min(...prices),
         priceEnd: Math.max(...prices),
-        totalPages: Math.ceil(docs.length / perPage),
+        totalPages: Math.ceil(count / perPage),
+        currentPage: page,
       };
       res.status(200).json(response);
     } catch (err) {

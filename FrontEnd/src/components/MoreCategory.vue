@@ -3,12 +3,13 @@
     <div class="customspace"></div>
     <div class="container">
       <div id="pcertouter">
-        <input
+        <!-- <input
           type="text"
           v-model="McatSearch"
           placeholder="More Categories"
           id="numberinputpcert"
-        />
+        /> -->
+        <inputComp label="More Categories...."></inputComp>
       </div>
     </div>
     <div class="customspace"></div>
@@ -34,6 +35,10 @@
     </div>
   </div>
 </template>
+
+<script setup>
+import inputComp from "./InputBox.vue";
+</script>
 
 <script>
 export default {
