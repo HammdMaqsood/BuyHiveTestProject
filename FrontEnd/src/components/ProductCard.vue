@@ -5,7 +5,6 @@
       <p id="title">{{ item.name }}</p>
       <p id="moq">MOQ {{ item.MOQ }} {{ item.piece }}</p>
       <p id="price">$ {{ item.price }} / {{ item.piece }}</p>
-      <!-- <button id="cart" v-if="hover === index">Add to Cart</button> -->
       <Button_comp type="add-to-cart" v-if="hover === index"></Button_comp>
     </div>
   </div>
@@ -41,6 +40,7 @@ export default {
   box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
   background-color: white;
   z-index: 0;
+  cursor: pointer;
 }
 
 .product:hover {

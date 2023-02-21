@@ -3,13 +3,10 @@
     <div class="customspace"></div>
     <div class="container">
       <div id="pcertouter">
-        <!-- <input
-          type="text"
-          v-model="McatSearch"
-          placeholder="More Categories"
-          id="numberinputpcert"
-        /> -->
-        <inputComp label="More Categories...."></inputComp>
+        <inputComp
+          label="More Categories...."
+          @data-emitted-search="recsearch"
+        ></inputComp>
       </div>
     </div>
     <div class="customspace"></div>
@@ -20,17 +17,10 @@
       >
         {{ McatData[0].MainCategory_name }}</label
       >
-      <div v-for="item in McatData[0].subcategories">
+      <div v-for="item in Mcatfilt">
         <label @click="Fetch_Sub(item.subcategory_name)" id="labelcat">
           {{ item.subcategory_name }}
         </label>
-        <div
-          id="labelsubcatcontainer"
-          v-for="item in item.sub_subcategories"
-          @click="Fetch_Sub_Sub(item.sub_subcategory_name)"
-        >
-          <label id="labelsubcat"> {{ item.sub_subcategory_name }}</label>
-        </div>
       </div>
     </div>
   </div>
@@ -63,6 +53,15 @@ export default {
     McatData() {
       return this.$store.state.McatSelected;
     },
+    Mcatfilt() {
+      if (this.McatSearch != "") {
+        return this.McatData[0].subcategories.filter((el) => {
+          return el.subcategory_name.match(this.McatSearch);
+        });
+      } else {
+        return this.McatData[0].subcategories;
+      }
+    },
     Cat() {
       return this.$store.state.Category;
     },
@@ -71,6 +70,9 @@ export default {
     },
   },
   methods: {
+    recsearch(data) {
+      this.McatSearch = data;
+    },
     Fetch_Main: function (val) {
       val = val.replace(/ /g, "_");
 
@@ -90,24 +92,14 @@ export default {
       this.$store.dispatch("fetchProducts", mainslug);
       this.$store.dispatch("fetchcert", mainslug);
     },
-    Fetch_Sub_Sub: function (val) {
-      val = val.replace(/ /g, "_");
-
-      const mainslug =
-        "http://localhost:5000/Products?sub_subcategory_name=" + val;
-      this.$store.dispatch("fetchProducts", mainslug);
-      this.$store.dispatch("storeLatestSlug", mainslug);
-      this.$store.dispatch("ChangeUrl", mainslug);
-      this.$store.dispatch("fetchcert", mainslug);
-    },
   },
 };
 </script>
 
 <style scoped>
 #labelcat {
-  margin-left: 35px;
-  font-size: 95%;
+  margin-left: 45px;
+  font-size: smaller;
 }
 #labelcatMain {
   margin-left: 35px;
@@ -156,7 +148,6 @@ export default {
   font-size: 100%;
   color: black;
 }
-
 #numberinput {
   width: 40%;
   border-radius: 20px;

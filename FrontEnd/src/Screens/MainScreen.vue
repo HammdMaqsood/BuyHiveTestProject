@@ -1,9 +1,7 @@
 <template>
   <div id="main">
     <div id="headertop"><headertop></headertop></div>
-
     <div><searchbox></searchbox></div>
-
     <div class="leftspace"></div>
   </div>
   <div>

@@ -29,9 +29,10 @@ const productSchema = mongoose.Schema({
     ref: "MainCategory",
   },
   subcategory_id: { type: mongoose.Schema.Types.ObjectId, ref: "MainCategory" },
-  sub_subcategory_id:{ type: mongoose.Schema.Types.ObjectId, ref: "MainCategory" },
-
-
+  sub_subcategory_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "MainCategory",
+  },
 });
 
 module.exports = mongoose.model("Product", productSchema);

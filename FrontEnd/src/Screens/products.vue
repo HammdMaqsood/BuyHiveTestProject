@@ -5,7 +5,7 @@
   </div>
 </template>
 <script setup>
-import sort from "../components/SortingPaging.vue";
+import sort from "./SortingPaging.vue";
 import productCardComp from "../components/ProductCard.vue";
 </script>
 

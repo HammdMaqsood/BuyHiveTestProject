@@ -9,7 +9,7 @@ exports.products_get_all = async (req, res) => {
     let pricestart = req.query.pricestart || 0;
     let moqfilt = req.query.moqfilt || 2000;
     let sort = req.query.sort || "relevance";
-    let Usabol = req.query.Usabol;
+    let total = 5;
     let match = {};
     if (req.query.Usabol) {
       match = {
@@ -23,7 +23,6 @@ exports.products_get_all = async (req, res) => {
         MOQ: { $lt: parseInt(moqfilt) },
       };
     }
-
     const query = {};
     for (const [key, value] of Object.entries(req.query)) {
       if (
@@ -42,7 +41,6 @@ exports.products_get_all = async (req, res) => {
         query[key] = value.split(",");
       }
     }
-
     const pipeline = [
       {
         $lookup: {
@@ -76,7 +74,6 @@ exports.products_get_all = async (req, res) => {
           as: "maincategory",
         },
       },
-
       {
         $project: {
           _id: 1,
@@ -118,7 +115,6 @@ exports.products_get_all = async (req, res) => {
           sub_subcategory_id: 1,
         },
       },
-
       {
         $match: match,
       },
@@ -147,11 +143,11 @@ exports.products_get_all = async (req, res) => {
     try {
       const [docs, count] = await Promise.all([
         Product.aggregate(pipeline).exec(),
-        Product.countDocuments(match).exec(),
       ]);
       const prices = docs.map((doc) => doc.price);
       const response = {
         count: count,
+        productcount: docs.length,
         pCertData: Array.from(new Set(docs.map((doc) => doc.Pcert_name))),
         sCertData: Array.from(new Set(docs.map((doc) => doc.Scert_name))),
         MlocationData: Array.from(
@@ -183,13 +179,13 @@ exports.products_get_all = async (req, res) => {
         }),
         priceStart: Math.min(...prices),
         priceEnd: Math.max(...prices),
-        totalPages: Math.ceil(count / perPage),
+        totalPages: Math.ceil(total / perPage),
         currentPage: page,
       };
       res.status(200).json(response);
     } catch (err) {
       console.log(err);
-      res.status(500).json({
+      res.status(404).json({
         error: err,
       });
     }
@@ -234,10 +230,6 @@ exports.products_create_product = async (req, res, next) => {
         Pcert_id: result.Pcert_id,
         Scert_id: result.Scert_id,
         MLocatoin_id: result.MLocatoin_id,
-        request: {
-          type: "GET",
-          url: "http://localhost:3000/products/" + result._id,
-        },
       },
     });
   } catch (err) {

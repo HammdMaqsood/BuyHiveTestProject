@@ -8,9 +8,6 @@ const store = createStore({
     changebol: false,
     page: 1,
     cert: [],
-    Mainbol: false,
-    Subbol: false,
-    Sub_Subbol: false,
     modalbol: false,
     McatSelected: "",
     Url: "http://localhost:5000/Products",
@@ -22,24 +19,6 @@ const store = createStore({
     },
     setUrl(state, products) {
       state.Url = products;
-    },
-    setMainboltrue(state) {
-      state.Mainbol = true;
-    },
-    setMainbolfalse(state) {
-      state.Mainbol = false;
-    },
-    setSubboltrue(state) {
-      state.Subbol = true;
-    },
-    setSubbolfalse(state) {
-      state.Subbol = false;
-    },
-    setSub_Subboltrue(state) {
-      state.Sub_Subbol = true;
-    },
-    setSub_Subbolfalse(state) {
-      state.Sub_Subbol = false;
     },
     setLatestSlug(state, products) {
       state.LatestSlug = products;

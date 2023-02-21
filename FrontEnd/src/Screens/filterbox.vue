@@ -1,7 +1,7 @@
 <template>
   <div id="spacebw">
     <h3 id="productscount">Products</h3>
-    <h3 id="productscount2">({{ products.count }} Products)</h3>
+    <h3 id="productscount2">({{ products.productcount }} Products)</h3>
   </div>
   <div class="leftbox">
     <MoreCategory />
@@ -57,7 +57,6 @@
       @data-emitted="MLocationreceiveData"
     ></FilterCertificatoin>
     <h3 class="label">Stock Availability</h3>
-
     <div id="checkboxes">
       <input type="checkbox" v-model="isUsa" class="labelselect" value="true" />
       <label class="labelselect">USA</label>

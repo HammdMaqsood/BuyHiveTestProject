@@ -18,7 +18,6 @@
       <label class="labelselect">{{ item }}</label>
     </div>
   </div>
-
   <div v-if="showbol">
     <P class="labelseeall" @click="certshowAll = true" v-if="!certshowAll"
       >Show all</P
@@ -123,7 +122,6 @@ export default {
   text-decoration: underline;
   cursor: pointer;
 }
-
 #numberinputcert {
   width: 87%;
   border-radius: 20px;
@@ -137,7 +135,6 @@ export default {
   font-size: 100%;
   color: black;
 }
-
 .scrollbar::-webkit-scrollbar {
   width: 5px;
   background-color: rgba(242, 242, 242, 1);
@@ -147,7 +144,6 @@ export default {
   background-color: #4caf50;
   border-radius: 10px;
 }
-
 .customspace {
   height: 12px;
 }

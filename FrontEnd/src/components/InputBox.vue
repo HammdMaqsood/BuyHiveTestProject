@@ -7,7 +7,6 @@
   />
 </template>
 <script setup></script>
-
 <script>
 export default {
   props: ["label", "type"],
@@ -40,22 +39,7 @@ export default {
   },
 
   created() {},
-  computed: {
-    changebol() {
-      return this.$store.state.changebol;
-    },
-    products() {
-      return this.$store.state.products;
-    },
-    certData() {
-      return this.$store.state.cert;
-    },
-    Uri() {
-      return this.$store.state.Url;
-    },
-  },
-
-  //   methods: {},
+  computed: {},
 };
 </script>
 

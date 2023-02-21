@@ -29,39 +29,19 @@
           </option>
         </select>
       </div>
-      <!-- <button id="searchbtn" v-on:click="fs">Search</button> -->
       <button_comp type="search" @data-emitted="fs"></button_comp>
     </div>
   </div>
-  <div>
-    <transition name="fade" appear>
-      <div
-        class="modal-overlay"
-        v-if="showModal"
-        @click="showModal = false"
-      ></div>
-    </transition>
-    <transition name="slide" appear>
-      <div class="modal" role="dialog" v-if="showModal">
-        <div id="transcontainer" v-for="item in Cat.MainCategories">
-          <h3 id="transhmain" @click="handle_main(item.MainCategory_name)">
-            {{ item.MainCategory_name }}
-          </h3>
-
-          <p
-            v-for="item in item.subcategories"
-            id="transub"
-            @click="handle_sub(item.subcategory_name)"
-          >
-            {{ item.subcategory_name }}
-          </p>
-        </div>
-      </div>
-    </transition>
-  </div>
+  <modal
+    :showModal="showModal"
+    :Cat="Cat"
+    @data-emitted-main="handle_main"
+    @data-emitted-sub="handle_sub"
+  ></modal>
 </template>
 <script setup>
 import Button_comp from "../components/Button.vue";
+import modal from "../components/modal.vue";
 </script>
 
 <script>
@@ -98,7 +78,6 @@ export default {
         return el.MainCategory_name == val;
       });
       this.$store.dispatch("storeMcatSelected", this.McatData);
-
       this.slug = "http://localhost:5000/products?MainCategory_name=" + val;
       this.$store.commit("setmodaltrue");
 
@@ -108,6 +87,7 @@ export default {
       this.$store.dispatch("storeLatestSlug", this.slug);
     },
     handle_sub: function (val) {
+      this.selected = "All Categories";
       this.showModal = false;
       this.McatData = this.Cat.MainCategories.filter((category) => {
         return category.subcategories.some(
@@ -216,45 +196,7 @@ img
 
   margin: auto 0px auto 20px;
 }
-#transcontainer
-{
-  width: 10%;
 
-
-  margin: 10px 0px 6px 30px;
-  text-align: left;
-  z-index: 1;
-}
-#transhmain
-{
-  font-size: smaller;
-
-  font-weight: bold;
-  cursor: pointer;
-
-}
-#transhmain:hover
-{
-  color: #29b574;
-}
-#transub:hover
-{
-  color: #29b574;
-}
-
-#transub
-{
-  cursor: pointer;
-  width: 100%;
-  margin: 2px 0px 0px 0px;
-  font-size: x-small;
-}
-
-
-.slide-enter,
-.slide-leave-to {
-  transform: scaleY(0);
-}
 #search {
   background-color: white;
 
@@ -314,44 +256,5 @@ body {
   display: grid;
   place-items: center;
   font-size: 1.4rem;
-}
-.modal {
-  transform: none;
-  background-color: rgba(242, 242, 242, 255);
-  width: 90%;
-  height: auto;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  position: absolute;
-  margin: 0px auto 0px 70px;
-   z-index: 2;
-
-}
-.modal h1 {
-  margin: 0 0 1rem;
-}
-
-.modal-overlay {
-  content: "";
-
-  position: relative;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 1;
-  opacity: 0.6;
-  cursor: pointer;
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.4s linear;
-}
-
-.fade-enter,
-.fade-leave-to {
-  opacity: 0;
 }
 </style>
