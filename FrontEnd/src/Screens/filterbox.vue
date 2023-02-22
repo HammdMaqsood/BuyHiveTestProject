@@ -3,63 +3,83 @@
     <h3 id="productscount">Products</h3>
     <h3 id="productscount2">({{ products.productcount }} Products)</h3>
   </div>
-  <div class="leftbox">
-    <MoreCategory />
-    <h3 class="label">Price</h3>
-    <div class="container">
-      <div id="numberinputdiv">
-        <input
-          type="number"
-          :placeholder="certData.priceStart"
-          id="numberinput"
-          v-model="pricest"
-        />
-        <input type="number" placeholder="$" id="numberinputdollar" readonly />
-      </div>
-      <div class="vl2"></div>
-      <h3>--</h3>
-
-      <div class="vl2"></div>
-      <div id="numberinputdiv">
-        <input
-          type="number"
-          v-bind:placeholder="certData.priceEnd"
-          id="numberinput"
-          v-model="priceed"
-        />
-        <input type="number" placeholder="$" id="numberinputdollar" readonly />
-      </div>
+  <div id="box">
+    <div id="catbtn" @click="filter.showfilter = !filter.showfilter">
+      Filters
     </div>
+    <div v-if="filter.showfilter" class="leftbox">
+      <MoreCategory />
+      <h3 class="label">Price</h3>
+      <div class="container">
+        <div id="numberinputdiv">
+          <input
+            type="number"
+            :placeholder="certData.priceStart"
+            id="numberinput"
+            v-model="filter.pricest"
+          />
+          <input
+            type="number"
+            placeholder="$"
+            id="numberinputdollar"
+            readonly
+          />
+        </div>
+        <div class="vl2"></div>
+        <h3>--</h3>
 
-    <h3 class="label">MOQ</h3>
+        <div class="vl2"></div>
+        <div id="numberinputdiv">
+          <input
+            type="number"
+            v-bind:placeholder="certData.priceEnd"
+            id="numberinput"
+            v-model="filter.priceed"
+          />
+          <input
+            type="number"
+            placeholder="$"
+            id="numberinputdollar"
+            readonly
+          />
+        </div>
+      </div>
 
-    <div class="container">
-      <InputBox
-        :label="moqstr"
-        @data-emitted="moqdata"
-        type="number"
-      ></InputBox>
-    </div>
+      <h3 class="label">MOQ</h3>
 
-    <FilterCertificatoin
-      v-bind:Data="certData.pCertData"
-      label="Product Certification"
-      @data-emitted="pcertreceiveData"
-    ></FilterCertificatoin>
-    <FilterCertificatoin
-      v-bind:Data="certData.sCertData"
-      label="Supplier Certification"
-      @data-emitted="scertreceiveData"
-    ></FilterCertificatoin>
-    <FilterCertificatoin
-      v-bind:Data="certData.MlocationData"
-      label="Manufacture Location"
-      @data-emitted="MLocationreceiveData"
-    ></FilterCertificatoin>
-    <h3 class="label">Stock Availability</h3>
-    <div id="checkboxes">
-      <input type="checkbox" v-model="isUsa" class="labelselect" value="true" />
-      <label class="labelselect">USA</label>
+      <div class="container">
+        <InputBox
+          :label="moqstr"
+          @data-emitted="moqdata"
+          type="number"
+        ></InputBox>
+      </div>
+
+      <FilterCertificatoin
+        v-bind:Data="certData.pCertData"
+        label="Product Certification"
+        @data-emitted="pcertreceiveData"
+      ></FilterCertificatoin>
+      <FilterCertificatoin
+        v-bind:Data="certData.sCertData"
+        label="Supplier Certification"
+        @data-emitted="scertreceiveData"
+      ></FilterCertificatoin>
+      <FilterCertificatoin
+        v-bind:Data="certData.MlocationData"
+        label="Manufacture Location"
+        @data-emitted="MLocationreceiveData"
+      ></FilterCertificatoin>
+      <h3 class="label">Stock Availability</h3>
+      <div id="checkboxes">
+        <input
+          type="checkbox"
+          v-model="filter.isUsa"
+          class="labelselect"
+          value="true"
+        />
+        <label class="labelselect">USA</label>
+      </div>
     </div>
   </div>
 </template>
@@ -73,46 +93,46 @@ import FilterCertificatoin from "../components/FilterCertificatoin.vue";
 export default {
   data() {
     return {
-      pricest: "",
-      priceed: "",
-      MOQ: "",
+      filter: {
+        pricest: "",
+        priceed: "",
+        MOQ: "",
+        pcert: "",
+        scert: "",
+        Mlocation: "",
+        isUsa: false,
+        showfilter: true,
+      },
       moqstr: "Less Than",
-      isUsa: false,
-      pcert: "",
-      scert: "",
-      Mlocation: "",
     };
   },
   watch: {
-    changebol: function (newVal, oldVal) {},
-    pcert: function (newVal, oldVal) {
+    "filter.pcert": function (newVal, oldVal) {
+      console.log("pricese==", this.filter.pricest);
       this.updateProducts();
     },
-    isUsa: function (newVal, oldVal) {
+    "filter.isUsa": function (newVal, oldVal) {
       this.updateProducts();
     },
-    pricest: function (newVal, oldVal) {
+    "filter.pricest": function (newVal, oldVal) {
       this.updateProducts();
     },
-    priceed: function (newVal, oldVal) {
+    "filter.priceed": function (newVal, oldVal) {
       this.updateProducts();
     },
-    MOQ: function (newVal, oldVal) {
+    "filter.MOQ": function (newVal, oldVal) {
       this.updateProducts();
     },
-    scert: function (newVal, oldVal) {
+    "filter.scert": function (newVal, oldVal) {
       this.updateProducts();
     },
-    Mlocation: function (newVal, oldVal) {
+    "filter.Mlocation": function (newVal, oldVal) {
       this.updateProducts();
     },
   },
 
   created() {},
   computed: {
-    changebol() {
-      return this.$store.state.changebol;
-    },
     products() {
       return this.$store.state.products;
     },
@@ -126,16 +146,17 @@ export default {
 
   methods: {
     pcertreceiveData(data) {
-      this.pcert = data;
+      this.filter.pcert = data;
     },
+
     scertreceiveData(data) {
-      this.scert = data;
+      this.filter.scert = data;
     },
     MLocationreceiveData(data) {
-      this.Mlocation = data;
+      this.filter.Mlocation = data;
     },
     moqdata(data) {
-      this.MOQ = data;
+      this.filter.MOQ = data;
       console.log("moq==", data);
     },
     updateProducts() {
@@ -145,13 +166,17 @@ export default {
       } else if (baseSlug.length != 30) {
         baseSlug += "&";
       }
-      let priceStartParam = this.pricest ? `pricestart=${this.pricest}` : "";
-      let priceEndParam = this.priceed ? `pricefinal=${this.priceed}` : "";
-      let moqParam = this.MOQ ? `moqfilt=${this.MOQ}` : "";
+      let priceStartParam = this.filter.pricest
+        ? `pricestart=${this.filter.pricest}`
+        : "";
+      let priceEndParam = this.filter.priceed
+        ? `pricefinal=${this.filter.priceed}`
+        : "";
+      let moqParam = this.filter.MOQ ? `moqfilt=${this.filter.MOQ}` : "";
       let queryParams = [
-        this.pcert,
-        this.scert,
-        this.Mlocation,
+        this.filter.pcert,
+        this.filter.scert,
+        this.filter.Mlocation,
         priceStartParam,
         priceEndParam,
         moqParam,
@@ -160,14 +185,15 @@ export default {
         .join("&");
 
       let slugi = `${baseSlug}${queryParams ? `${queryParams}` : ""}`;
-      if (this.isUsa) {
+      if (this.filter.isUsa) {
         if (slugi.length === 29) {
           slugi += "?";
         } else {
           slugi += "&";
         }
-        slugi = slugi + "Usabol=" + this.isUsa;
+        slugi = slugi + "Usabol=" + this.filter.isUsa;
       }
+      console.log("Slugiii==", slugi);
       this.$store.dispatch("fetchProducts", slugi);
       this.$store.dispatch("storeLatestSlug", slugi);
     },
@@ -193,7 +219,6 @@ export default {
 
 .leftbox {
   border: 1px solid #e2e8f0;
-
   width: 24%;
   margin-top: 5px;
   float: left;
@@ -260,6 +285,9 @@ export default {
 
   color: #b9b8b8;
 }
+#catbtn {
+  display: none;
+}
 
 .container {
   display: flex;
@@ -272,5 +300,46 @@ input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+
+@media screen and (max-width: 1109px) {
+  .leftbox {
+    border: 1px solid #e2e8f0;
+    width: 80%;
+    margin-top: 5px;
+    float: left;
+    margin-left: 2px;
+    padding-bottom: 20px;
+    margin-bottom: 50px;
+  }
+  #productscount {
+    display: none;
+  }
+  #productscount2 {
+    display: none;
+  }
+  #catbtn {
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    height: 45px;
+    width: 80%;
+    border-radius: 30px;
+    color: black;
+    background-color: white;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    align-self: center;
+    border: 2px solid rgba(242, 242, 242, 1);
+  }
+  #box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 }
 </style>

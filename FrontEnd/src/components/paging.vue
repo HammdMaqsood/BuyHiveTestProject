@@ -20,8 +20,7 @@
     </div>
   </div>
 </template>
-<script setup>
-</script>
+<script setup></script>
 <script>
 export default {
   data() {
@@ -36,7 +35,6 @@ export default {
     nextpage() {
       if (this.page != this.products.totalPages) {
         this.page++;
-
         let baseSlug = this.slug;
         if (baseSlug.indexOf("?") === -1) {
           baseSlug = baseSlug + "?page=" + this.page;
@@ -83,8 +81,6 @@ export default {
   height: 15px;
   margin: auto;
 }
-
-
 .arrowouter {
   float: left;
   display: flex;
@@ -125,14 +121,15 @@ export default {
   float: left;
   width: 50%;
 }
-
-
 #arrow {
   font-size: larger;
 }
 li {
   font-size: smaller;
 }
-
-
+@media screen and (max-width: 1109px) {
+  #pagecontainer {
+    display: none;
+  }
+}
 </style>

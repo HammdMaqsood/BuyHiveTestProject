@@ -26,7 +26,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .product {
   display: flex;
   flex-direction: column;
@@ -42,15 +42,15 @@ export default {
   z-index: 0;
   cursor: pointer;
 }
-
 .product:hover {
   box-shadow: 1px 1px 2px 2px gray;
 }
 img {
-  max-width: 90%;
-  max-height: 180px;
-  margin: 20px 20px 0 43px;
-  align-self: center;
+
+  width: 70%;
+  height: 180px;
+  margin: 20px auto auto 40px;
+  /* margin: auto; */
 }
 #title {
   text-transform: capitalize;
@@ -71,4 +71,27 @@ img {
   margin-left: 5px;
   font-weight: bold;
 }
+@media screen and (max-width: 1109px) {
+  .product {
+    width: 30%;
+  }
+}
+@media screen and (max-width: 681px) {
+  .product {
+    width: 45%;
+  }
+  @media screen and (max-width: 491px) {
+    .product {
+    width: 40%;
+  }
+  img {
+  
+  width: 75%;
+  height: 180px;
+  margin: 20px auto auto 20px;
+}
+}
+}
+
+
 </style>

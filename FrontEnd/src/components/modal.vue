@@ -30,7 +30,6 @@
 <script>
 export default {
   props: ["showModal", "Cat"],
-
   data() {
     return {};
   },
@@ -115,5 +114,33 @@ body {
   z-index: 1;
   opacity: 0.6;
   cursor: pointer;
+}
+@media screen and (max-width: 1109px) {
+  .modal {
+    transform: none;
+    background-color: rgba(242, 242, 242, 255);
+    width: 85%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    position: absolute;
+    margin: 40px auto auto 30px;
+    z-index: 2;
+  }
+}
+@media screen and (max-width: 1023) {
+  .modal {
+    transform: none;
+    background-color: rgba(242, 242, 242, 255);
+    width: 85%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    position: absolute;
+    margin: 40px auto auto 30px;
+    z-index: 2;
+  }
 }
 </style>

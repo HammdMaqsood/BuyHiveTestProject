@@ -2,13 +2,24 @@
   <div id="main">
     <div id="headertop"><headertop></headertop></div>
     <div><searchbox></searchbox></div>
-    <div class="leftspace"></div>
-  </div>
-  <div>
-    <filterboxVue></filterboxVue>
-  </div>
-  <div class="Rightbox">
-    <products></products>
+    <div>
+      <div class="leftspace"></div>
+      <div>
+        <filterboxVue></filterboxVue>
+      </div>
+      <div v-if="p_length != 0" class="Rightbox">
+        <products></products>
+      </div>
+      <div v-else>
+        <div class="product-not-found">
+          <h2>Product not found</h2>
+          <p>
+            We're sorry, the product you are looking for is not available at
+            this time.
+          </p>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script setup>
@@ -21,15 +32,15 @@ import headertop from "./header.vue";
 <script>
 export default {
   data() {
-    return {
-      productName: "",
-      productPrice: "",
-      pp: [],
-    };
+    return {};
   },
   computed: {
     products() {
       return this.$store.state.products;
+    },
+    p_length() {
+      console.log("count==", this.products.productcount);
+      return this.products.productcount;
     },
   },
   methods: {},
@@ -61,7 +72,6 @@ export default {
   margin-left: 5px;
   float: left;
 }
-
 #pcertouter {
   width: 85%;
   border-radius: 20px;
@@ -72,10 +82,33 @@ export default {
   font-size: 100%;
   color: black;
 }
-
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+.product-not-found {
+  padding: 20px;
+  text-align: center;
+  margin: 100px auto;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+}
+.product-not-found h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: red;
+}
+.product-not-found p {
+  font-size: 16px;
+  line-height: 1.5;
+}
+@media screen and (max-width: 1109px) {
+  .leftspace {
+    display: none;
+  }
 }
 </style>

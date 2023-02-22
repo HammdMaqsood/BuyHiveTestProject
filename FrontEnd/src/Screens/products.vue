@@ -27,6 +27,11 @@ export default {
 </script>
 
 <style>
+@media screen and (max-width: 1109px) {
+  .containerright {
+    width: 140%;
+  }
+}
 .containerright {
   display: flex;
   flex-wrap: wrap;

@@ -6,9 +6,13 @@
         v-on:click="showModal = !showModal"
         :style="{ backgroundColor: catbtnColor }"
       >
-        <img
-          src="https://img.icons8.com/material-outlined/24/0096FF/four-squares.png"
-        />
+        <P
+          ><img
+            id="searchimg"
+            src="https://img.icons8.com/material-outlined/24/0096FF/four-squares.png"
+          />
+        </P>
+
         <p>Categories</p>
       </div>
       <div id="searchouter">
@@ -29,7 +33,14 @@
           </option>
         </select>
       </div>
-      <button_comp type="search" @data-emitted="fs"></button_comp>
+      <button_comp
+        id="searchbtn"
+        type="search"
+        @data-emitted="fs"
+      ></button_comp>
+      <button class="searchbtn2" v-on:click="fs">
+        <img id="searchimg" src="../assets/icons8-search-50.png" alt="" />
+      </button>
     </div>
   </div>
   <modal
@@ -66,9 +77,18 @@ export default {
       return this.$store.state.Category;
     },
     catbtnColor() {
-      return this.showModal
-        ? "rgba(255,255,255,1)"
-        : "rgba(242, 242, 242, 255)";
+      if (window.matchMedia("(max-width: 1024px)").matches) {
+        return this.showModal
+          ? "rgba(242, 242, 242, 255)"
+          : "rgba(242, 242, 242, 255)";
+      } else {
+        return this.showModal
+          ? "rgba(255,255,255,1)"
+          : "rgba(242, 242, 242, 255)";
+      }
+    },
+    catbtnborder() {
+      return this.showModal ? "rgba(255,255,255,1)" : "rgba(255,255,255,1)";
     },
   },
   methods: {
@@ -80,7 +100,6 @@ export default {
       this.$store.dispatch("storeMcatSelected", this.McatData);
       this.slug = "http://localhost:5000/products?MainCategory_name=" + val;
       this.$store.commit("setmodaltrue");
-
       this.$store.dispatch("fetchProducts", this.slug);
       this.$store.dispatch("fetchcert", this.slug);
       this.$store.dispatch("ChangeUrl", this.slug);
@@ -138,6 +157,7 @@ export default {
 </script>
 
 <style scoped>
+
 #searchbox {
   background-color: rgba(242, 242, 242, 255);
   width: 90%;
@@ -150,6 +170,7 @@ export default {
   margin: 10px auto 0px auto;
   border-radius: 10px;
 }
+
 #searchouter {
   width: 75%;
   height: 40px;
@@ -168,6 +189,17 @@ export default {
   height: 20px;
   margin-left: 2px;
 }
+.searchbtn2 {
+    display: none;
+
+  }
+
+  #searchimg
+  {
+    height: 25px;
+    margin: auto;
+  }
+
 #catbtn {
   cursor: pointer;
   display: flex;
@@ -187,14 +219,13 @@ export default {
   margin: auto;
 }
 p{
-  margin: auto auto auto auto;
-}
-img
+margin-left: 8px;}
+#catimg
 {
-  align-self: flex-start;
-  width: 20%;
 
-  margin: auto 0px auto 20px;
+  height: 25px;
+
+  margin: 3px 0px auto 20px;
 }
 
 #search {
@@ -256,5 +287,66 @@ body {
   display: grid;
   place-items: center;
   font-size: 1.4rem;
+}
+
+
+@media screen and (max-width: 1023px) {
+  .searchbtn2{
+    display: block;
+    cursor: pointer;
+    height: 45px;
+    width: 10%;
+    border-radius: 30px;
+    color: white;
+    background-color: rgba(0, 179, 200, 255);
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    margin-right: auto;
+  }
+  #searchbtn
+  {
+    display: none;
+  }
+  #searchbtn2
+  {
+    display: none;
+  }
+#searchbox {
+width: 100%;
+height: auto;
+margin: 10px 0;
+flex-direction: row;
+justify-content: flex-start;
+align-items: flex-start;
+padding: 10px;
+}
+#catbtn {
+position: absolute;
+top: 100%;
+left: 0;
+width: 90%;
+text-align: center;
+margin-top: 10px;
+margin-left: 20px;
+z-index: 999;
+border: 4px solid;
+border-color: rgba(255,255,255,1);
+}
+#searchouter {
+width: 80%;
+height: auto;
+margin-bottom: 10px;
+}
+#search {
+width: 100%;
+}
+.dropdown {
+display: none;
+}
+.vl
+{
+  display: none;
+}
 }
 </style>

@@ -153,4 +153,18 @@ li {
 .dropdown-menu li:hover {
   color: #29b574;
 }
+@media screen and (max-width: 1109px) {
+  #sortcontainer{  width: 100%;
+    margin-left: 20px;
+    margin-top: 20px;
+
+}
+
+}
+
+@media screen and (max-width: 416px) {
+  .dropdown-toggle::after{display: none}
+
+}
+
 </style>

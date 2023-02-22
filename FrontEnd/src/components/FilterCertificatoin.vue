@@ -1,28 +1,37 @@
 <template>
   <h3 class="label">{{ this.label }}</h3>
   <div class="container">
-    <div id="certouter">
-      <InputBox :label="label" @data-emitted-search="recsearch"></InputBox>
-    </div>
+    <InputBox :label="label" @data-emitted-search="recsearch"></InputBox>
   </div>
   <div class="customspace"></div>
   <div
     class="scrollbar"
     :style="{
-      height: certshowAll ? 'auto' : '50px',
-      overflowY: certshowAll ? 'hidden' : 'scroll',
+      height: selectedfilter.certshowAll ? 'auto' : '50px',
+      overflowY: selectedfilter.certshowAll ? 'hidden' : 'scroll',
     }"
   >
     <div id="checkboxes" v-for="item in DATA">
-      <input type="checkbox" :value="item" v-model="cert" class="labelselect" />
+      <input
+        type="checkbox"
+        :value="item"
+        v-model="selectedfilter.cert"
+        class="labelselect"
+      />
       <label class="labelselect">{{ item }}</label>
     </div>
   </div>
   <div v-if="showbol">
-    <P class="labelseeall" @click="certshowAll = true" v-if="!certshowAll"
+    <P
+      class="labelseeall"
+      @click="selectedfilter.certshowAll = true"
+      v-if="!selectedfilter.certshowAll"
       >Show all</P
     >
-    <P class="labelseeall" @click="certshowAll = false" v-if="certshowAll"
+    <P
+      class="labelseeall"
+      @click="selectedfilter.certshowAll = false"
+      v-if="selectedfilter.certshowAll"
       >Show Less</P
     >
   </div>
@@ -36,16 +45,18 @@ export default {
   props: ["Data", "label"],
   data() {
     return {
-      cert: [],
-      certsearch: "",
-      certshowAll: false,
-      pcertParams: "",
-      scertParams: "",
-      MLocationparam: "",
+      selectedfilter: {
+        certshowAll: false,
+        certsearch: "",
+        pcertParams: "",
+        scertParams: "",
+        MLocationparam: "",
+        cert: [],
+      },
     };
   },
   watch: {
-    cert: function (newVal, oldVal) {
+    "selectedfilter.cert": function (newVal, oldVal) {
       this.updateProducts();
     },
   },
@@ -55,9 +66,9 @@ export default {
       return this.$store.state.Url;
     },
     DATA() {
-      if (this.certsearch != "") {
+      if (this.selectedfilter.certsearch != "") {
         return this.Data.filter((el) => {
-          return el.match(this.certsearch);
+          return el.match(this.selectedfilter.certsearch);
         });
       } else {
         return this.Data;
@@ -78,7 +89,7 @@ export default {
       this.$emit("data-emitted", val);
     },
     recsearch(data) {
-      this.certsearch = data;
+      this.selectedfilter.certsearch = data;
     },
     updateProducts() {
       function createParamString(name, values) {
@@ -89,16 +100,25 @@ export default {
       }
 
       if (this.label == "Product Certification") {
-        this.pcertParams = createParamString("Pcert_name", this.cert);
-        this.sendData(this.pcertParams);
+        this.selectedfilter.pcertParams = createParamString(
+          "Pcert_name",
+          this.selectedfilter.cert
+        );
+        this.sendData(this.selectedfilter.pcertParams);
       }
       if (this.label == "Supplier Certification") {
-        this.scertParams = createParamString("Scert_name", this.cert);
-        this.sendData(this.scertParams);
+        this.selectedfilter.scertParams = createParamString(
+          "Scert_name",
+          this.selectedfilter.cert
+        );
+        this.sendData(this.selectedfilter.scertParams);
       }
       if (this.label == "Manufacture Location") {
-        this.MLocationparam = createParamString("MLocation_name", this.cert);
-        this.sendData(this.MLocationparam);
+        this.selectedfilter.MLocationparam = createParamString(
+          "MLocation_name",
+          this.selectedfilter.cert
+        );
+        this.sendData(this.selectedfilter.MLocationparam);
       }
     },
   },

@@ -23,7 +23,6 @@ export default {
   computed: {},
 };
 </script>
-
 <style>
 #container {
   height: 100px;
@@ -44,5 +43,11 @@ export default {
 }
 #customspace {
   width: 5%;
+}
+@media screen and (max-width: 1109px) {
+  #right
+  {
+    display: none;
+  }
 }
 </style>
